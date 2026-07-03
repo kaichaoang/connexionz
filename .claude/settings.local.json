@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(bash -n db/apply.sh)",
+      "Bash(command -v psql)",
+      "Bash(python -c \"import yaml,sys; [yaml.safe_load\\(open\\(f\\)\\) or print\\(f'{f}: OK'\\) for f in ['.github/workflows/deploy-db.yml', '.github/workflows/deploy.yml']]\")",
+      "Bash(node -e \"const fs=require\\('fs'\\);for\\(const f of ['.github/workflows/deploy-db.yml','.github/workflows/deploy.yml']\\){const t=fs.readFileSync\\(f,'utf8'\\);if\\(/\\\\t/.test\\(t\\)\\){console.log\\(f+': TAB found \\(invalid YAML\\)'\\);process.exit\\(1\\)}console.log\\(f+': no tabs, reads OK \\('+t.split\\(/\\\\r?\\\\n/\\).length+' lines\\)'\\)}\")",
+      "Bash(grep -rn \"from \\\\\"\\\\.\\\\./\\\\.\\\\./supabase\\\\\"\\\\|from \\\\\"\\\\.\\\\./\\\\.\\\\./achievementsStore\\\\\"\\\\|from \\\\\"\\\\.\\\\./\\\\.\\\\./useAchievements\\\\\"\" src)",
+      "Bash(ls -1 *.ts *.yml)",
+      "Bash(rm -f supabase.ts achievementsStore.ts useAchievements.ts deploy.yml)",
+      "WebFetch(domain:kaichaoang.github.io)",
+      "mcp__claude-in-chrome__list_connected_browsers",
+      "Bash(curl -s -L \"https://kaichaoang.github.io/connexionz/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://kaichaoang.github.io/connexionz/\")",
+      "PowerShell(Stop-Process -Id 23904 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue)",
+      "PowerShell(if \\($?\\) { \"checked\" })",
+      "Bash(rm -f tsconfig.tsbuildinfo)",
+      "PowerShell(Stop-Process -Id 13076 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(\"freed\")",
+      "PowerShell($c = Get-NetTCPConnection -LocalPort 5173 -State Listen -ErrorAction SilentlyContinue; if \\($c\\) { Stop-Process -Id $c.OwningProcess -Force -ErrorAction SilentlyContinue; \"freed 5173\" } else { \"5173 free\" })"
+    ]
+  }
+}

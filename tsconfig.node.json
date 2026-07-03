@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    // `tsc -b` type-checks vite.config.ts but must emit (composite projects
+    // can't set noEmit on this TS version). Send the throwaway output into
+    // node_modules (gitignored) so it never clutters the repo root.
+    "outDir": "./node_modules/.tmp/tsconfig-node",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig-node/.tsbuildinfo"
+  },
+  "include": ["vite.config.ts"]
+}

@@ -1,0 +1,40 @@
+name: Deploy database
+
+# Manual only — you push database changes "when you need to", not on every code
+# push. Run it from the Actions tab: pick a target and click "Run workflow".
+# (To also run it automatically, add a `push:` trigger with `paths: [db/**]`.)
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: What to apply
+        type: choice
+        options:
+          - all
+          - schema
+          - seed
+        default: all
+
+# Never run two database deploys at once.
+concurrency:
+  group: db-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install psql
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends postgresql-client
+
+      - name: Apply SQL to database
+        env:
+          # Supabase connection string — Dashboard > Project Settings > Database
+          # > Connection string. Use the SESSION POOLER string (host
+          # ...pooler.supabase.com:5432), not the direct connection: the direct
+          # host is IPv6-only and GitHub runners have no IPv6.
+          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: bash db/apply.sh "${{ inputs.target }}"
